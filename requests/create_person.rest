@@ -1,0 +1,34 @@
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+    "name": "Harry Potter",
+    "number": "111-34-5678"
+}
+
+###
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+    "name": "Hermione Granger"
+}
+
+###
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+    "name": "Arto Hellas",
+    "number": "135-24680"
+}
+
+
+###
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+    "name": "Ron Weasley",
+    "number": "001-98765"
+}
