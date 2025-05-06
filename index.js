@@ -100,6 +100,7 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
+    console.log('updating info')
     const { name, number } = request.body
     Person.findById(request.params.id)
     .then(person => {
