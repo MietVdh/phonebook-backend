@@ -1,20 +1,8 @@
-const express = require('express')
 require('dotenv').config()
+const express = require('express')
+const Person = require('./models/person')
 const morgan = require('morgan')
-const mongoose = require('mongoose')
 
-const url = process.env.MONGODB_URI
-
-mongoose.set('strictQuery', false)
-
-mongoose.connect(url)
-
-const personSchema = new mongoose.Schema({
-    name: String,
-    number: String
-})
-
-const Person = mongoose.model('Person', personSchema)
 
 if (process.argv.length == 3) {
     Person.find({}).then(result => {
@@ -58,7 +46,6 @@ app.get('/api/persons/:id', (request, response) => {
 app.get('/api/persons', (request, response) => {
     Person.find({}).then(people => {
         response.json(people)
-        mongoose.connection.close()
     })
     
 })
@@ -85,20 +72,19 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
-    if (persons.find(person => person.name === body.name)) {
-        return response.status(400).json({
-            error: "name must be unique"
-        })
-    }
-    const person = {
+    // if (persons.find(person => person.name === body.name)) {
+    //     return response.status(400).json({
+    //         error: "name must be unique"
+    //     })
+    // }
+    const person = new Person({
         name: body.name,
         number: body.number || "",
-        id: String(Math.floor(Math.random()*99999))
-    }
+    })
 
-    persons = persons.concat(person)
-    
-    response.json(person)
+    person.save().then(savedPerson => {
+        response.json(savedPerson)
+    })
 
 })
 
