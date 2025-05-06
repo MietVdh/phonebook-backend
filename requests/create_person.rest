@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "name": "Harry Potter",
-    "number": "000-000000"
+    "number": "000000000"
 }
 
 ###
@@ -11,8 +11,8 @@ POST http://localhost:3001/api/persons/
 Content-Type: application/json
 
 {
-    "name": "He",
-    "number": "343678"
+    "name": "Hank",
+    "number": "112-345693678"
 }
 
 ###
