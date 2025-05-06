@@ -32,15 +32,17 @@ morgan.token('req_body', function getRequestBody (req) {
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :req_body'))
 app.use(express.static('dist'))
 
-app.get('/api/persons/:id', (request, response) => {
-    const id = request.params.id
+app.get('/api/persons/:id', (request, response, next) => {
+    Person.findById(request.params.id)
+    .then(person => {
+        if (person) {
+            response.json(person)
+        } else {
+            response.status(404).end()
+        }
+    })
+    .catch(error => next(error))
     
-    const person = persons.find(person => person.id === id)
-    if (person) {
-        response.json(person)
-    } else {
-        response.status(404).end()
-    }
 })
 
 app.get('/api/persons', (request, response) => {
@@ -51,12 +53,15 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.get('/info', (request, response) => {
-    const numberOfPeople = persons.length == 1 ? "1 person" : `${persons.length} people`
-    const info = `
-    <p>Phonebook has info for ${numberOfPeople}</p>
+    Person.countDocuments().then(count => {
+        const info = `
+    <p>Phonebook has info for ${count} people</p>
     <p>${new Date()}</p>
     `
     response.send(info)
+    })
+    
+    
 })
 
 app.post('/api/persons', (request, response) => {
