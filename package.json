@@ -11,7 +11,7 @@
     "dev": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "build:ui": "rm -rf dist && cd ../FullStackOpen2025/part4/phonebook-frontend && npm run build && cp -r dist ../../../phonebook-backend/",
+    "build:ui": "rm -rf dist && cd ../FullStackOpen2025/part3/phonebook-frontend && npm run build && cp -r dist ../../../phonebook-backend/",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
   "dependencies": {
